@@ -1,0 +1,7 @@
+Name,Type,To_fire,To_rock,To_water,To_electric,To_plant,To_beetle,Attack_power,Attack_1,Attack_2,Attack_3,Special,Hp,Picture
+Aquarder,Agua,2,2,0,-1,-1,0,2,Aqua-jet,Cola férrea,Cabezazo,Lluvia,25,pictures/aquarder.png
+Firesor,Fuego,0,-1,-1,0,2,2,2,Llamarada,Embestida,Mordisco,Día soleado,25,pictures/Firesor.png
+Electder,Eléctrico,0,-1,2,0,-1,2,3,Trueno,Arañazo,Mordisco,Campo magnético,25,pictures/electder.png
+Mousebug,Escarabajo,-1,2,0,-1,2,0,2,Picotazo,Embestida,Cabezazo,Esporas,25,pictures/mousebug.png
+Splant,Planta,-1,2,2,2,0,-1,2,Hoja navaja,Mordisco,Cabezazo,Rayo solar,25,pictures/splant.png
+Rockdog,Roca,2,0,-1,2,-1,0,2,Roca afilada,Velocidad,Cola férrea,Campo de rocas,25,pictures/rockdog.png
