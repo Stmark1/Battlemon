@@ -14,60 +14,13 @@ types_dict = {
     "To_beetle": "Escarabajo",
 }
 
-class Login:
-    def __init__(self):
-        self.geometry('300x150')
-        self.resizable(0, 0)
-        self.title('Login')
-
-        # UI options
-        paddings = {'padx': 5, 'pady': 5}
-        entry_font = {'font': ('Helvetica', 11)}
-
-        # configure the grid
-        self.columnconfigure(0, weight=1)
-        self.columnconfigure(1, weight=3)
-
-        username = tk.StringVar()
-        password = tk.StringVar()
-
-        # heading
-        heading = ttk.Label(self, text='Member Login', style='Heading.TLabel')
-        heading.grid(column=0, row=0, columnspan=2, pady=5, sticky=tk.N)
-
-        # username
-        username_label = ttk.Label(self, text="Username:")
-        username_label.grid(column=0, row=1, sticky=tk.W, **paddings)
-
-        username_entry = ttk.Entry(self, textvariable=username, **entry_font)
-        username_entry.grid(column=1, row=1, sticky=tk.E, **paddings)
-
-        # password
-        password_label = ttk.Label(self, text="Password:")
-        password_label.grid(column=0, row=2, sticky=tk.W, **paddings)
-
-        password_entry = ttk.Entry(
-            self, textvariable=password, show="*", **entry_font)
-        password_entry.grid(column=1, row=2, sticky=tk.E, **paddings)
-
-        # login button
-        login_button = ttk.Button(self, text="Login")
-        login_button.grid(column=1, row=3, sticky=tk.E, **paddings)
-
-        # configure style
-        self.style = ttk.Style(self)
-        self.style.configure('TLabel', font=('Helvetica', 11))
-        self.style.configure('TButton', font=('Helvetica', 11))
-
-        # heading style
-        self.style.configure('Heading.TLabel', font=('Helvetica', 12))
-
 class Game:
     def __init__(self):
         self.root = tk.Tk()
         self.root.geometry("400x200")
         self.root.title("Battlemon")
-        self.root.geometry("800x600")
+        self.root.geometry("610x605")
+        self.root.resizable(width=False, height=False)
         self.caracters = caracters.index.tolist()
         self.display_buttons()
         self.root.mainloop()
@@ -76,22 +29,28 @@ class Game:
     def caracter_button(self, name):
         caracter = tk.Button(
             self.root,
-            text=name,
-            width=20,
-            padx=40,
-            pady=20,
+            text="Detalle",
+            pady=5,
             font=("Arial", 12),
             command=lambda: ShowCaracter(name),
             )
         return caracter
 
-    def show_panel(self):
-        
-        image_path = caracters.loc[self.name, "Picture"]
+    def caracter_label(self, name):
+        caracter = tk.Label(
+            self.root,
+            text=name,
+            pady=5,
+            font=("Arial", 12),
+            )
+        return caracter
+
+    def show_panel(self, name):
+        image_path = caracters.loc[name, "Picture"]
         img = Image.open(image_path)
         img = img.resize((200,200), Image.ANTIALIAS)
         photoImg =  ImageTk.PhotoImage(img)
-        panel = tk.Label(self.root, image = photoImg)
+        panel = tk.Button(self.root, image = photoImg, relief="raised")
         panel.image = photoImg
         
         return panel
@@ -99,103 +58,102 @@ class Game:
     def display_buttons(self):
         dupla = zip(self.caracters, range(len(self.caracters)))
         for caracter, i in dupla:
+            caracter_name = self.caracter_label(caracter)
+            panel = self.show_panel(caracter)
             c_buton = self.caracter_button(caracter)
             if i == 0:
-                c_buton.grid(row=0, column=0)
+                caracter_name.grid(row=0, column=0)
+                panel.grid(row=1, column=0)
+                c_buton.grid(row=2, column=0)
             elif i == 1:
-                c_buton.grid(row=0, column=1)
+                caracter_name.grid(row=0, column=1)
+                panel.grid(row=1, column=1)
+                c_buton.grid(row=2, column=1)
             elif i == 2:
-                c_buton.grid(row=0, column=2)
+                caracter_name.grid(row=0, column=2)
+                panel.grid(row=1, column=2)
+                c_buton.grid(row=2, column=2)
             elif i == 3:
-                c_buton.grid(row=1, column=0)
+                caracter_name.grid(row=3, column=0)
+                panel.grid(row=4, column=0)
+                c_buton.grid(row=5, column=0)
             elif i == 4:
-                c_buton.grid(row=1, column=1)
+                caracter_name.grid(row=3, column=1)
+                panel.grid(row=4, column=1)
+                c_buton.grid(row=5, column=1)
             elif i == 5:
-                c_buton.grid(row=1, column=2)
+                caracter_name.grid(row=3, column=2)
+                panel.grid(row=4, column=2)
+                c_buton.grid(row=5, column=2)
+        
+        start = tk.Button(
+            self.root,
+            text="INICIAR",
+            pady=10,
+            padx=10,
+            font=("Arial", 12),
+        )
+        start.grid(row=6, columnspan=3)
 
 
 class ShowCaracter:
     def __init__(self, name):
         self.root = tk.Toplevel()
-        self.root.geometry("840x400")
+        self.root.geometry("870x480")
         self.name = name
         self.root.title(name + " info")
-        #self.root.resizable(width=False, height=False)
+        self.root.resizable(width=False, height=False)
         self.display_content()
 
     def display_content(self):
         self.stats_title(0)
-        self.show_panel().grid(row=1, rowspan=3, column=0)
-        self.show_advantage().grid(row=1,  column=1)
-        self.show_disadvantage().grid(row=2,  column=1)
-        self.show_normal().grid(row=3,  column=1)
-        self.table().grid(row=4,column=0, columnspan=2)
+        self.show_panel().grid(row=1, rowspan=3, column=0, columnspan=3)
+        self.show_advantage().grid(row=1,  column=3, columnspan=4)
+        self.show_disadvantage().grid(row=2,  column=3, columnspan=4)
+        self.show_normal().grid(row=3,  column=3, columnspan=4)
+        self.table()
         
     def table(self):
 
-        style = ttk.Style()
-        style.configure(" Treeview.Heading ", rowheight=10, background="red")
+        def table_by_labels(columns, row):
+            columns_plus = zip(columns, range(len(columns)))
+            for i, j in columns_plus:
+                single_column = tk.Label(
+                    self.root,
+                    text=i,
+                    font=("Arial", 12)
+                )
+                if i == caracters.loc[self.name, "Description"]:
+                    single_column.grid(row=row, column=j, columnspan=6)
+                if i == "Ataque\nnormal":
+                    single_column.config(width=10)
+                single_column.grid(row=row, column=j)
 
-        columns = (
+        row_1 = (
             "Habilida",
-            "Ataque normal",
+            "Ataque\nnormal",
             "Ataque con\nventaja",
             "Ataque con\ndesventaja",
             "Ataque con\npotenciador\nnormal",
             "Ataque con\npotenciador con\nventaja",
             "Ataque con\npotenciador con\ndesventaja"
         )
-        
-        info_table = ttk.Treeview(self.root, height=5)
-        info_table["columns"] = columns
-        info_table.column("#0", width=0, stretch=tk.NO)
-        for col in columns:
-            info_table.column(col, anchor=tk.CENTER, width=120, minwidth=25)
-            info_table.heading(col, text=col, anchor=tk.CENTER)
-            
+        row_2 = (caracters.loc[self.name, "Attack_1"], "3", "5", "2", "5", "7", "4")
+        row_3 = (caracters.loc[self.name, "Attack_2"], caracters.loc[self.name, "Attack_power"])
+        row_4 = (caracters.loc[self.name, "Attack_2"], caracters.loc[self.name, "Attack_power"])
+        row_5 = (caracters.loc[self.name, "Attack_3"], caracters.loc[self.name, "Attack_power"])
+        row_6 = (caracters.loc[self.name, "Special"],  caracters.loc[self.name, "Description"])
 
-        info_table.insert(
-            parent='',
-            index=tk.END,
-            values=(
-                caracters.loc[self.name, "Attack_1"],
-                "3",
-                "5",
-                "2",
-                "5",
-                "7",
-                "4"
-            )
-        )
-        
-        info_table.insert(
-            parent='',
-            index=tk.END,
-            values=(
-                caracters.loc[self.name, "Attack_2"],
-                caracters.loc[self.name, "Attack_power"]
-            )
-        )
-        
-        info_table.insert(
-            parent='',
-            index=tk.END,
-            values=(
-                caracters.loc[self.name, "Attack_3"],
-                caracters.loc[self.name, "Attack_power"]
-            )
-        )
-        
-        info_table.insert(
-            parent='',
-            index=tk.END,
-            values=(
-                caracters.loc[self.name, "Special"],
-                caracters.loc[self.name, "Description"]
-            )
-        )
+        list_of_rows = [row_1, row_2, row_3, row_4, row_5, row_6]
 
-        return info_table
+        def table_generator(list_of_rows, start):
+            rows_plus = zip(list_of_rows, range(len(list_of_rows)))
+            for row, row_number in rows_plus:
+                row_start = row_number + start
+                table_by_labels(row, row_start)
+
+        return table_generator(list_of_rows, 4)
+
 
     def stats_title(self, row):
         
@@ -211,8 +169,8 @@ class ShowCaracter:
             font=("Arial", 20)
         )
         
-        caracter_name_type.grid(row=row, column=0)
-        caracter_type.grid(row=row, column=1)
+        caracter_name_type.grid(row=row, column=0, columnspan=3)
+        caracter_type.grid(row=row, column=3, columnspan=4)
     
     def show_panel(self):
         
@@ -253,9 +211,9 @@ class ShowCaracter:
         stats = self.modifiers()
         advantage = tk.Label(
             self.root,
-            text=f"Ventaja con: {stats[0]+ ' , ' + stats[1]}.",
+            text=f"\tVentaja con:\t\t{stats[0]+ ', ' + stats[1]}.",
             font=("Arial", 15),
-            bg="#D3D3D3",
+            anchor='w',
             height=2,
             width=50
         )
@@ -265,9 +223,9 @@ class ShowCaracter:
         stats = self.modifiers()
         disadvantage = tk.Label(
             self.root,
-            text=f"Desventaja con: {stats[2] + ' , ' + stats[3]}.",
+            text=f"\tDesventaja con:\t\t{stats[2] + ', ' + stats[3]}.",
             font=("Arial", 15),
-            bg="#D3D3D3",
+            anchor='w',
             height=2,
             width=50
         )
@@ -277,9 +235,9 @@ class ShowCaracter:
         stats = self.modifiers()
         normal = tk.Label(
             self.root,
-            text=f"Normal con: {stats[4]+ ' , ' + stats[5]}.",
+            text=f"\tNormal con:\t\t{stats[4]+ ', ' + stats[5]}.",
             font=("Arial", 15),
-            bg="#D3D3D3",
+            anchor='w',
             height=2,
             width=50
         )
