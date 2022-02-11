@@ -1,5 +1,4 @@
 import tkinter as tk
-from tkinter import ttk
 from PIL import ImageTk, Image
 import pandas as pd
 
@@ -17,8 +16,7 @@ types_dict = {
 class Game:
     def __init__(self):
         self.root = tk.Tk()
-        self.root.geometry("400x200")
-        self.root.title("Battlemon")
+        self.root.title("Fightcreatures")
         self.root.geometry("610x605")
         self.root.resizable(width=False, height=False)
         self.caracters = caracters.index.tolist()
@@ -99,7 +97,7 @@ class Game:
 class ShowCaracter:
     def __init__(self, name):
         self.root = tk.Toplevel()
-        self.root.geometry("870x480")
+        self.root.geometry("860x480")
         self.name = name
         self.root.title(name + " info")
         self.root.resizable(width=False, height=False)
