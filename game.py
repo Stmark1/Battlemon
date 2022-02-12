@@ -14,15 +14,25 @@ types_dict = {
 }
 
 class Game:
-    def __init__(self):
+    def __init__(self, user):
         self.root = tk.Tk()
+        self.user = user
         self.root.title("Fightcreatures")
-        self.root.geometry("610x605")
+        self.root.geometry("636x660")
         self.root.resizable(width=False, height=False)
         self.caracters = caracters.index.tolist()
+
+        player = tk.Label(
+            self.root,
+            text=f"Jugador: {self.user}",
+            font=("Verdana", 20),
+            width=35,
+            anchor=tk.W
+        )
+        player.grid(row=0, columnspan=3)
+
         self.display_buttons()
         self.root.mainloop()
-
 
     def caracter_button(self, name):
         caracter = tk.Button(
@@ -48,7 +58,12 @@ class Game:
         img = Image.open(image_path)
         img = img.resize((200,200), Image.ANTIALIAS)
         photoImg =  ImageTk.PhotoImage(img)
-        panel = tk.Button(self.root, image = photoImg, relief="raised")
+        panel = tk.Button(
+            self.root,
+            bd= 5,
+            image = photoImg,
+            relief="raised"
+        )
         panel.image = photoImg
         
         return panel
@@ -60,29 +75,29 @@ class Game:
             panel = self.show_panel(caracter)
             c_buton = self.caracter_button(caracter)
             if i == 0:
-                caracter_name.grid(row=0, column=0)
-                panel.grid(row=1, column=0)
-                c_buton.grid(row=2, column=0)
+                caracter_name.grid(row=1, column=0)
+                panel.grid(row=2, column=0)
+                c_buton.grid(row=3, column=0)
             elif i == 1:
-                caracter_name.grid(row=0, column=1)
-                panel.grid(row=1, column=1)
-                c_buton.grid(row=2, column=1)
+                caracter_name.grid(row=1, column=1)
+                panel.grid(row=2, column=1)
+                c_buton.grid(row=3, column=1)
             elif i == 2:
-                caracter_name.grid(row=0, column=2)
-                panel.grid(row=1, column=2)
-                c_buton.grid(row=2, column=2)
+                caracter_name.grid(row=1, column=2)
+                panel.grid(row=2, column=2)
+                c_buton.grid(row=3, column=2)
             elif i == 3:
-                caracter_name.grid(row=3, column=0)
-                panel.grid(row=4, column=0)
-                c_buton.grid(row=5, column=0)
+                caracter_name.grid(row=4, column=0)
+                panel.grid(row=5, column=0)
+                c_buton.grid(row=6, column=0)
             elif i == 4:
-                caracter_name.grid(row=3, column=1)
-                panel.grid(row=4, column=1)
-                c_buton.grid(row=5, column=1)
+                caracter_name.grid(row=4, column=1)
+                panel.grid(row=5, column=1)
+                c_buton.grid(row=6, column=1)
             elif i == 5:
-                caracter_name.grid(row=3, column=2)
-                panel.grid(row=4, column=2)
-                c_buton.grid(row=5, column=2)
+                caracter_name.grid(row=4, column=2)
+                panel.grid(row=5, column=2)
+                c_buton.grid(row=6, column=2)
         
         start = tk.Button(
             self.root,
@@ -91,7 +106,7 @@ class Game:
             padx=10,
             font=("Arial", 12),
         )
-        start.grid(row=6, columnspan=3)
+        start.grid(row=7, columnspan=3)
 
 
 class ShowCaracter:
@@ -243,4 +258,4 @@ class ShowCaracter:
 
 
 if __name__ == "__main__":
-    Game()
+    Game("Marco")
