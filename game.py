@@ -14,13 +14,14 @@ types_dict = {
 }
 
 class Game:
-    def __init__(self, user):
+    def __init__(self, user, mode):
         self.root = tk.Tk()
         self.user = user
         self.root.title("Fightcreatures")
         self.root.geometry("636x660")
         self.root.resizable(width=False, height=False)
         self.caracters = caracters.index.tolist()
+        self.mode = mode
 
         player = tk.Label(
             self.root,
@@ -258,4 +259,4 @@ class ShowCaracter:
 
 
 if __name__ == "__main__":
-    Game("Marco")
+    Game("Marco", "mode1")
